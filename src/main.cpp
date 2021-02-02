@@ -1,13 +1,17 @@
 #include <Arduino.h>
 #include "code.h"
+#include "sensors.h"
 
 
 void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
+  ready_GPIO();
+  Serial.begin(115200);
   sayMyName(myName);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+
+  get_Soil(14, reg_b);
+
+  delay(2000);
 }
