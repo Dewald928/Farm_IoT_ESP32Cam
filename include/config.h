@@ -5,7 +5,10 @@
 #define PIN_LED 33 // Pin for onboard led
 #define DHTTYPE DHT22 //DHT22 sensor
 #define SERIAL_BAUD_RATE 115200 // Serial speed
-#define SLEEP_TIME 60000 // 60 seconds?
+
+// Sleep
+#define uS_TO_S_FACTOR 1000000  /* Conversion factor for micro seconds to seconds */
+#define TIME_TO_SLEEP  10        /* Time ESP32 will go to sleep (in seconds) */
 
 // WiFi
 #define WIFI_AP_NAME        "wlan-ap" //Wifi ssid

@@ -4,6 +4,7 @@
 #include "wifi_helper.h"
 #include "config.h"
 #include "thingsboard_helper.h"
+#include "sleep.h"
 
 // todo OTA updates
 
@@ -11,7 +12,7 @@
 DHT dht(PIN_DHT, DHTTYPE);
 WiFiClient espClient; // Initialize ThingsBoard client
 ThingsBoard tb(espClient); // Initialize ThingsBoard instance
-
+RTC_DATA_ATTR int bootCount = 0;  //counts number of boots
 
 
 void setup() {
@@ -23,10 +24,15 @@ void setup() {
   InitWiFi();
   sayMyName(myName);
   LED_on();
+
+  ++bootCount;
+  Serial.println("Boot number: " + String(bootCount));
+  print_wakeup_reason();
+  esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
 }
 
 void loop() {
-  delay(10000);
+  // delay(10000);
   
   check_WiFi(); // Reconnect to WiFi, if needed
   check_TB();   // Reconnect to ThingsBoard, if needed
@@ -37,5 +43,8 @@ void loop() {
   log_to_tb(TandH.temperature, TandH.humidity, soil_moisture);  // log temp, hum, soil to thingsboard
 
   tb.loop();  // Process messages
-  // enter deep sleep
+
+  Serial.println("Going to sleep now");
+  Serial.flush(); 
+  esp_deep_sleep_start();
 }
