@@ -1,6 +1,6 @@
 #include "wifi_helper.h"
 
-int status = WL_IDLE_STATUS;
+int wifi_status = WL_IDLE_STATUS;
 
 void InitWiFi() {
   Serial.println("Connecting to AP ...");
@@ -17,13 +17,22 @@ void InitWiFi() {
 
 void reconnect() {
   // Loop until we're reconnected
-  status = WiFi.status();
-  if ( status != WL_CONNECTED) {
+  wifi_status = WiFi.status();
+  if ( wifi_status != WL_CONNECTED) {
     WiFi.begin(WIFI_AP_NAME, WIFI_PASSWORD);
     while (WiFi.status() != WL_CONNECTED) {
       delay(500);
       Serial.print(".");
     }
     Serial.println("Connected to AP");
+  }
+}
+
+
+void check_WiFi(){
+  // Reconnect to WiFi, if needed
+  if (WiFi.status() != WL_CONNECTED) {
+    reconnect();
+    check_WiFi();
   }
 }

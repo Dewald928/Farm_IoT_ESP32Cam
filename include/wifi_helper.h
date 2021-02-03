@@ -4,7 +4,8 @@
 #include <WiFi.h>           // WiFi control for ESP32
 #include "config.h"
 
-extern int status; // the Wifi radio's status
+extern int wifi_status; // the Wifi radio's status
 
 void InitWiFi();    //start up the wifi
 void reconnect();   //reconnects to wifi AP
+void check_WiFi();  // Reconnect to WiFi, if needed
