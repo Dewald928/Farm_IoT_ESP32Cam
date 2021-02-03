@@ -8,6 +8,7 @@
 #include <Wire.h> // needed?
 #include <SPI.h>  // needed?
 #include <tuple>
+#include "config.h"
 
 extern uint64_t reg_b; // Used to store Pin registers
 
