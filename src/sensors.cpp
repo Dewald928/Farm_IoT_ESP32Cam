@@ -17,6 +17,10 @@ float get_Soil(int PIN_Soil, uint64_t reg_b){
     SET_PERI_REG_MASK(SENS_SAR_READ_CTRL2_REG, SENS_SAR2_DATA_INV);
 
     int value = analogRead(PIN_Soil);
-    Serial.println(value);
-    return value;
+    float soil_moisture = map(value, 2635, 1050, 0, 100);
+    Serial.print(F("Moisture: "));
+    Serial.print(soil_moisture);
+    Serial.println('%');
+    return soil_moisture;
 }
+

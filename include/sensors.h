@@ -4,6 +4,9 @@
 #include "driver/adc.h" //for analog pin control
 #include "esp32-hal-adc.h" // needed for adc pin reset
 #include "soc/sens_reg.h" // needed for adc pin reset
+#include <DHT.h>
+#include <Wire.h> // needed?
+#include <SPI.h>  // needed?
 
 extern uint64_t reg_b; // Used to store Pin registers
 
