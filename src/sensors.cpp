@@ -28,7 +28,8 @@ float get_Soil(uint64_t reg_b){
 
     int value = analogRead(PIN_SOIL);
     float soil_moisture = map(value, 2635, 1050, 0, 100);
-    Serial.print(F("Moisture: ")); // todo if soil -50% check
+    if (soil_moisture < 0) { soil_moisture = 0;} // negative moisture to zero
+    Serial.print(F("Moisture: "));
     Serial.print(soil_moisture);
     Serial.println('%');
     return soil_moisture;
