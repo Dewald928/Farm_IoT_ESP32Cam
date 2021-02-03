@@ -27,6 +27,8 @@ float get_Soil(uint64_t reg_b){
     SET_PERI_REG_MASK(SENS_SAR_READ_CTRL2_REG, SENS_SAR2_DATA_INV);
 
     int value = analogRead(PIN_SOIL);
+    // delay(1000);
+    // value = analogRead(PIN_SOIL);   // needs to take 2nd reading
     float soil_moisture = map(value, 2635, 1050, 0, 100);
     if (soil_moisture < 0) { soil_moisture = 0;} // negative moisture to zero
     Serial.print(F("Moisture: "));
@@ -38,7 +40,8 @@ float get_Soil(uint64_t reg_b){
 
 float get_temperature() {
     float t = dht.readTemperature(); // Read temperature as Celsius (the default)
-
+    // delay(500);
+    // t = dht.readTemperature();
     // Check if any reads failed and exit early (to try again).
     if (isnan(t)) {
         Serial.println(F("Failed to read from DHT sensor!"));
@@ -55,6 +58,8 @@ float get_temperature() {
 
 float get_humidity() {
     float h = dht.readHumidity(); // Read humidity
+    // delay(500);
+    // h = dht.readHumidity();
 
     // Check if any reads failed and exit early (to try again).
     if (isnan(h)) {
@@ -73,8 +78,10 @@ float get_humidity() {
 TempAndHumidity get_temp_and_hum(){
     TempAndHumidity values;
     float h = dht.readHumidity();
-    // Read temperature as Celsius (the default)
     float t = dht.readTemperature();
+    delay(1000);
+    h = dht.readHumidity();
+    t = dht.readTemperature();
 
     if (isnan(h) || isnan(t)) {
     Serial.println(F("Failed to read from DHT sensor!"));

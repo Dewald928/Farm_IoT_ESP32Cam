@@ -32,19 +32,27 @@ void setup() {
 }
 
 void loop() {
-  // delay(10000);
-  
+  delay(5000);
   check_WiFi(); // Reconnect to WiFi, if needed
   check_TB();   // Reconnect to ThingsBoard, if needed
 
-  TempAndHumidity TandH = get_temp_and_hum();
-  float soil_moisture = get_Soil(reg_b);
+  // Get sensor values
+  TempAndHumidity TandH;
+  float soil_moisture;
+  for (int i = 0; i < 3; i++)
+  {
+    TandH = get_temp_and_hum();
+    soil_moisture = get_Soil(reg_b);
+    delay(500);
+  }  
 
+  // Log values
   log_to_tb(TandH.temperature, TandH.humidity, soil_moisture);  // log temp, hum, soil to thingsboard
 
   tb.loop();  // Process messages
 
-  Serial.println("Going to sleep now");
-  Serial.flush(); 
-  esp_deep_sleep_start();
+  // Serial.println("Going to sleep now");
+  // delay(1000);
+  // Serial.flush(); 
+  // esp_deep_sleep_start();
 }
