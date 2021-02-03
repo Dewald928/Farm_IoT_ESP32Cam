@@ -69,6 +69,32 @@ float get_humidity() {
 } 
 
 
-void log_to_tb(float, float, float){
+TempAndHumidity get_temp_and_hum(){
+    TempAndHumidity values;
+    float h = dht.readHumidity();
+    // Read temperature as Celsius (the default)
+    float t = dht.readTemperature();
 
+    if (isnan(h) || isnan(t)) {
+    Serial.println(F("Failed to read from DHT sensor!"));
+    get_temp_and_hum();
+    }
+
+    Serial.print(F("Temperature: "));
+    Serial.print(t);
+    Serial.println(F("°C "));
+    Serial.print(F("Humidity: "));
+    Serial.print(h);
+    Serial.println(F("%"));
+
+    values.temperature = t;
+	values.humidity = h;
+    return values;
+}
+
+
+void log_to_tb(float temperature, float humidity, float soil_moisture){
+    tb.sendTelemetryFloat("temperature", temperature);
+    tb.sendTelemetryFloat("humidity", humidity);
+    tb.sendTelemetryFloat("soil_moisture", soil_moisture);
 }

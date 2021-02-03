@@ -5,6 +5,7 @@
 #include "config.h"
 #include "thingsboard_helper.h"
 
+// todo OTA updates
 
 // Init instances
 DHT dht(PIN_DHT, DHTTYPE);
@@ -25,16 +26,16 @@ void setup() {
 }
 
 void loop() {
-  delay(5000);
+  delay(10000);
   
   check_WiFi(); // Reconnect to WiFi, if needed
   check_TB();   // Reconnect to ThingsBoard, if needed
 
+  TempAndHumidity TandH = get_temp_and_hum();
+  float soil_moisture = get_Soil(reg_b);
 
-  get_temperature();
-  delay(600); // needs small delay between dht reads
-  get_humidity();
-  get_Soil(reg_b);
+  log_to_tb(TandH.temperature, TandH.humidity, soil_moisture);  // log temp, hum, soil to thingsboard
 
-
+  tb.loop();  // Process messages
+  // enter deep sleep
 }
