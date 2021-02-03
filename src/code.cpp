@@ -1,8 +1,8 @@
 // the only include in the .cpp file
 #include "code.h"
 
-String myName = "Here's Johnny!";
+String myName = "Heisenberg";
 
 void sayMyName(String name){
-  Serial.print(name);
+  Serial.println(name);
 }
