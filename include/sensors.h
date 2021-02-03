@@ -7,8 +7,12 @@
 #include <DHT.h>
 #include <Wire.h> // needed?
 #include <SPI.h>  // needed?
+#include <tuple>
 
 extern uint64_t reg_b; // Used to store Pin registers
 
-void ready_GPIO();  // Setup analog pins before wifi on
-float get_Soil(int, uint64_t);
+void ready_GPIO(); // Setup analog pins before wifi on
+float get_Soil(int, uint64_t);  // Gets soil moisture in percentage
+float get_temperature(DHT, int);        // Get temp
+float get_humidity(DHT, int);        // Get hum
+void log_to_tb(float, float, float);    // log temp, hum, soil to thingsboard

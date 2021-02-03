@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "code.h"
 #include "sensors.h"
+#include "wifi_helper.h"
 
 // Constants
 #define PIN_DHT 15 // Digital pin connected to the DHT sensor
@@ -9,7 +10,15 @@
 #define PIN_LED 33 // Pin for onboard led
 #define DHTTYPE DHT22 //DHT22 sensor
 #define SERIAL_BAUD_RATE 115200 // Serial speed
+#define SLEEP_TIME 60000 // 60 seconds?
 
+// WiFi
+#define WIFI_AP_NAME        "wlan-ap" //Wifi ssid
+#define WIFI_PASSWORD       "0004edb3faee"  // WiFi password
+
+// Thingsboard
+#define TB_TOKEN    "VzQXLXW5zznguTWQYa7N"
+#define TB_SERVER   "demo.thingsboard.io" // ThingsBoard server instance.
 
 // Init instances
 DHT dht(PIN_DHT, DHTTYPE);
@@ -23,23 +32,10 @@ void setup() {
 }
 
 void loop() {
-  delay(2000);
 
-  float h = dht.readHumidity();
-  // Read temperature as Celsius (the default)
-  float t = dht.readTemperature();
-
-  // Check if any reads failed and exit early (to try again).
-  if (isnan(h) || isnan(t)) {
-    Serial.println(F("Failed to read from DHT sensor!"));
-    return;
-  }
-  Serial.print(F("Humidity: "));
-  Serial.print(h);
-  Serial.print(F("%  Temperature: "));
-  Serial.print(t);
-  Serial.println(F("°C "));
-
+  get_temperature(dht, PIN_DHT);
+  delay(500); // needs small delay
+  get_humidity(dht, PIN_DHT);
   get_Soil(14, reg_b);
 
   delay(3000);
