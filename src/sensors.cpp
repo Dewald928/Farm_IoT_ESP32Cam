@@ -31,7 +31,7 @@ float get_temperature(DHT dht) {
     // Check if any reads failed and exit early (to try again).
     if (isnan(t)) {
         Serial.println(F("Failed to read from DHT sensor!"));
-        get_temperature(dht, PIN_DHT);
+        get_temperature(dht);
         delay(500);
     }
     Serial.print(F("Temperature: "));
@@ -48,7 +48,7 @@ float get_humidity(DHT dht) {
     // Check if any reads failed and exit early (to try again).
     if (isnan(h)) {
         Serial.println(F("Failed to read from DHT sensor!"));
-        get_humidity(dht, PIN_DHT);
+        get_humidity(dht);
         delay(500);
     }
     Serial.print(F("Humidity: "));

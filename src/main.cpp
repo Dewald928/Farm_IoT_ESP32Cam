@@ -18,10 +18,10 @@ void setup() {
 
 void loop() {
 
-  get_temperature(dht, PIN_DHT);
+  get_temperature(dht);
   delay(500); // needs small delay between dht reads
-  get_humidity(dht, PIN_DHT);
-  get_Soil(14, reg_b);
+  get_humidity(dht);
+  get_Soil(reg_b);
 
   delay(3000);
 }
