@@ -12,6 +12,8 @@ void InitWiFi() {
     Serial.print(".");
   }
   Serial.println("Connected to AP");
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
 }
 
 
@@ -25,6 +27,8 @@ void reconnect() {
       Serial.print(".");
     }
     Serial.println("Connected to AP");
+    Serial.print("IP address: ");
+    Serial.println(WiFi.localIP());
   }
 }
 

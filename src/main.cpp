@@ -7,7 +7,8 @@
 #include "sleep.h"
 #include <esp_sleep.h>
 #include "driver/gpio.h"
-#include "driver/rtc_io.h"    
+#include "driver/rtc_io.h" 
+#include "OTA_handler.h"
 
 // todo adc not working after deep sleep
 // todo OTA updates
@@ -27,6 +28,7 @@ void setup() {
   WiFi.begin(WIFI_AP_NAME, WIFI_PASSWORD);
   InitWiFi();
   sayMyName(myName);
+  start_OTA();
   LED_on();
 
   ++bootCount;
@@ -36,6 +38,7 @@ void setup() {
 }
 
 void loop() {
+  ArduinoOTA.handle();  // Handles OTA operations
   delay(2000);
 
   // esp_wifi_stop();
@@ -68,9 +71,8 @@ void loop() {
 
   tb.loop();  // Process messages
 
-  Serial.println("Going to sleep now");
-  // adc_power_off();
-  delay(1000);
-  Serial.flush(); 
-  esp_light_sleep_start();
+  // Serial.println("Going to sleep now");
+  // delay(1000);
+  // Serial.flush(); 
+  // esp_light_sleep_start();
 }
