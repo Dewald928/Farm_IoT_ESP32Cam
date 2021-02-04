@@ -7,7 +7,6 @@
 #include <DHT.h>
 #include <Wire.h> // needed?
 #include <SPI.h>  // needed?
-#include <tuple>
 #include "config.h"
 #include "ThingsBoard.h"
 

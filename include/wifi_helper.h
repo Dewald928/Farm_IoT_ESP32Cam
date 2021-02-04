@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include <WiFi.h>           // WiFi control for ESP32
 #include "config.h"
+#include <esp_wifi.h>
 
 extern int wifi_status; // the Wifi radio's status
 

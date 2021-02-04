@@ -5,7 +5,11 @@
 #include "config.h"
 #include "thingsboard_helper.h"
 #include "sleep.h"
+#include <esp_sleep.h>
+#include "driver/gpio.h"
+#include "driver/rtc_io.h"    
 
+// todo adc not working after deep sleep
 // todo OTA updates
 
 // Init instances
@@ -32,27 +36,41 @@ void setup() {
 }
 
 void loop() {
-  delay(5000);
-  check_WiFi(); // Reconnect to WiFi, if needed
-  check_TB();   // Reconnect to ThingsBoard, if needed
+  delay(2000);
 
+  // esp_wifi_stop();
   // Get sensor values
   TempAndHumidity TandH;
   float soil_moisture;
-  for (int i = 0; i < 3; i++)
+  for (int i = 0; i < 2; i++)
   {
     TandH = get_temp_and_hum();
     soil_moisture = get_Soil(reg_b);
-    delay(500);
+    delay(1000);
+
+    // int read_raw;
+    // adc2_config_channel_atten( ADC2_CHANNEL_6, ADC_ATTEN_0db );
+
+    // esp_err_t r = adc2_get_raw( ADC2_CHANNEL_6, ADC_WIDTH_12Bit, &read_raw);
+    // if ( r == ESP_OK ) {
+    //     printf("%d\n", read_raw );
+    // } else if ( r == ESP_ERR_TIMEOUT ) {
+    //     printf("ADC2 used by Wi-Fi.\n");
+    // }
   }  
+  // esp_wifi_start();
+
+  check_WiFi(); // Reconnect to WiFi, if needed
+  check_TB();   // Reconnect to ThingsBoard, if needed
 
   // Log values
   log_to_tb(TandH.temperature, TandH.humidity, soil_moisture);  // log temp, hum, soil to thingsboard
 
   tb.loop();  // Process messages
 
-  // Serial.println("Going to sleep now");
-  // delay(1000);
-  // Serial.flush(); 
-  // esp_deep_sleep_start();
+  Serial.println("Going to sleep now");
+  // adc_power_off();
+  delay(1000);
+  Serial.flush(); 
+  esp_light_sleep_start();
 }
