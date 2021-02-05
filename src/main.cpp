@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include "code.h"
 #include "sensors.h"
 #include "wifi_helper.h"
 #include "config.h"
@@ -21,12 +20,10 @@ RTC_DATA_ATTR int bootCount = 0;  //counts number of boots
 
 void setup() {
   ready_GPIO();
-  pinMode(PIN_LED, OUTPUT);
   Serial.begin(SERIAL_BAUD_RATE);
   dht.begin();
   WiFi.begin(WIFI_AP_NAME, WIFI_PASSWORD);
   InitWiFi();
-  sayMyName(myName);
   LED_on();
   start_OTA();
 
@@ -53,6 +50,7 @@ void loop() {
 
   check_WiFi(); // Reconnect to WiFi, if needed
   check_TB();   // Reconnect to ThingsBoard, if needed
+  check_RPC_subscribe(); // Reconnect to RPC
 
   // Log values
   log_to_tb(TandH.temperature, TandH.humidity, soil_moisture);  // log temp, hum, soil to thingsboard
@@ -60,7 +58,7 @@ void loop() {
   tb.loop();  // Process messages
 
   // Serial.println("Going to sleep now...");
-  delay(30000);
+  // delay(30000);
   // Serial.flush(); 
   // esp_light_sleep_start();
 }

@@ -3,6 +3,7 @@
 #define PIN_SOIL 14 // Analog pin for soil sensor
 #define PIN_BATTERY 12 // Analog pin for battery level
 #define PIN_LED 33 // Pin for onboard led
+#define PIN_FLASH 4 // Pin for builtin flash
 #define DHTTYPE DHT22 //DHT22 sensor
 #define SERIAL_BAUD_RATE 115200 // Serial speed
 
