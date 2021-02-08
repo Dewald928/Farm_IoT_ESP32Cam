@@ -5,7 +5,7 @@
 bool RPC_subscribed = false;
 uint8_t leds_control[] = { PIN_FLASH, PIN_LED}; // Array with LEDs that should be controlled from ThingsBoard, one by one
 // Initial period of LED cycling.
-int led_delay = 1000;
+int OTA_State = 0;
 
 void check_TB(){
     if (!tb.connected()) {
@@ -27,28 +27,52 @@ void check_TB(){
 // Processes function for RPC call "setValue"
 // RPC_Data is a JSON variant, that can be queried using operator[]
 // See https://arduinojson.org/v5/api/jsonvariant/subscript/ for more details
-RPC_Response processDelayChange(const RPC_Data &data)
+RPC_Response processSetOTA(const RPC_Data &data)
 {
-  Serial.println("Received the set delay RPC method");
+  Serial.println("Received the set OTA method");
 
   // Process data
 
-  led_delay = data;
+  OTA_State = data;
 
   Serial.print("Set new delay: ");
-  Serial.println(led_delay);
+  Serial.println(OTA_State);
 
-  return RPC_Response(NULL, led_delay);
+  return RPC_Response(NULL, OTA_State);
+}
+
+
+RPC_Response processSetFlash(const RPC_Data &data)
+{
+  Serial.println("Received the set flash RPC method");
+  int enabled = data;
+
+  Serial.print(" to state ");
+  Serial.println(enabled);
+
+  // Process data
+  digitalWrite(PIN_FLASH, enabled);
+
+  return RPC_Response(NULL, enabled);
 }
 
 // Processes function for RPC call "getValue"
 // RPC_Data is a JSON variant, that can be queried using operator[]
 // See https://arduinojson.org/v5/api/jsonvariant/subscript/ for more details
-RPC_Response processGetDelay(const RPC_Data &data)
+RPC_Response processGetOTA(const RPC_Data &data)
 {
-  Serial.println("Received the get value method");
+  Serial.println("Received the get OTA method");
 
-  return RPC_Response(NULL, led_delay);
+  return RPC_Response(NULL, OTA_State);
+}
+
+
+RPC_Response processGetFlash(const RPC_Data &data)
+{
+  Serial.println("Check flash status");
+  int flash_status = digitalRead(PIN_FLASH);
+
+  return RPC_Response(NULL, flash_status);
 }
 
 // Processes function for RPC call "setGpioStatus"
@@ -74,11 +98,14 @@ RPC_Response processSetGpioState(const RPC_Data &data)
 }
 
 
+
 // RPC handlers
 RPC_Callback callbacks[] = {
-  { "setValue",         processDelayChange },
-  { "getValue",         processGetDelay },
-  { "setGpioStatus",    processSetGpioState },
+  { "setOTA",         processSetOTA },
+  { "getOTA",         processGetOTA },
+  { "setGpioStatus",  processSetGpioState },
+  { "setFlash",       processSetFlash},
+  { "getFlash",       processGetFlash},
 };
 
 
