@@ -5,3 +5,4 @@
 #include <ArduinoOTA.h>   
 
 void start_OTA();   //enables Over the air updates
+void check_OTA(int);   //does not sleep if OTA enabled

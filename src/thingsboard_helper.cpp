@@ -5,7 +5,7 @@
 bool RPC_subscribed = false;
 uint8_t leds_control[] = { PIN_FLASH, PIN_LED}; // Array with LEDs that should be controlled from ThingsBoard, one by one
 // Initial period of LED cycling.
-int OTA_State = 0;
+int OTA_State = 1;
 
 void check_TB(){
     if (!tb.connected()) {
@@ -42,6 +42,17 @@ RPC_Response processSetOTA(const RPC_Data &data)
 }
 
 
+// Processes function for RPC call "getValue"
+// RPC_Data is a JSON variant, that can be queried using operator[]
+// See https://arduinojson.org/v5/api/jsonvariant/subscript/ for more details
+RPC_Response processGetOTA(const RPC_Data &data)
+{
+  Serial.println("Received the get OTA method");
+
+  return RPC_Response(NULL, OTA_State);
+}
+
+
 RPC_Response processSetFlash(const RPC_Data &data)
 {
   Serial.println("Received the set flash RPC method");
@@ -54,16 +65,6 @@ RPC_Response processSetFlash(const RPC_Data &data)
   digitalWrite(PIN_FLASH, enabled);
 
   return RPC_Response(NULL, enabled);
-}
-
-// Processes function for RPC call "getValue"
-// RPC_Data is a JSON variant, that can be queried using operator[]
-// See https://arduinojson.org/v5/api/jsonvariant/subscript/ for more details
-RPC_Response processGetOTA(const RPC_Data &data)
-{
-  Serial.println("Received the get OTA method");
-
-  return RPC_Response(NULL, OTA_State);
 }
 
 

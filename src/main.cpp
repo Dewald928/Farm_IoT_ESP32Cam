@@ -9,7 +9,7 @@
 #include "driver/rtc_io.h" 
 #include "OTA_handler.h"
 
-// todo OTA updates with sleep
+// todo/fix OTA updates with sleep
 
 // Init instances
 DHT dht(PIN_DHT, DHTTYPE);
@@ -27,11 +27,11 @@ void setup() {
   LED_on();
   start_OTA();
 
-  // ++bootCount;
-  // Serial.println("Boot number: " + String(bootCount));
-  // print_wakeup_reason();
-  // esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
-  // delay(500);
+  ++bootCount;
+  Serial.println("Boot number: " + String(bootCount));
+  print_wakeup_reason();
+  esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
+  delay(500);
 }
 
 void loop() {
@@ -57,8 +57,8 @@ void loop() {
 
   tb.loop();  // Process messages
 
-  // Serial.println("Going to sleep now...");
-  // delay(30000);
-  // Serial.flush(); 
-  // esp_light_sleep_start();
+  // delay(10000);
+  // RPC_subscribed = false;
+  check_OTA(OTA_State); //if OTA don't sleep
+  
 }

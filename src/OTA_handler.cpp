@@ -42,3 +42,20 @@ void start_OTA(){
 
   ArduinoOTA.begin();
 }
+
+
+void check_OTA(int OTA_State){
+  // If OTA is enabled wait for update instead of sleep
+  if (OTA_State == 1)
+  {
+    ArduinoOTA.handle(); 
+  }
+  else
+  {
+    // Serial.println("Going to sleep now...");
+    // Serial.flush(); 
+    // delay(3000);
+    // esp_light_sleep_start();
+  }
+}
+
