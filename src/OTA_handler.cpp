@@ -52,10 +52,10 @@ void check_OTA(int OTA_State){
   }
   else
   {
-    // Serial.println("Going to sleep now...");
-    // Serial.flush(); 
-    // delay(3000);
-    // esp_light_sleep_start();
+    Serial.println("Going to sleep now...");
+    Serial.flush(); 
+    delay(3000);
+    esp_light_sleep_start();
   }
 }
 

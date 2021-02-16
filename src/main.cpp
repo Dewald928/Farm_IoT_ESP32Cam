@@ -16,6 +16,7 @@ DHT dht(PIN_DHT, DHTTYPE);
 WiFiClient espClient; // Initialize ThingsBoard client
 ThingsBoard tb(espClient); // Initialize ThingsBoard instance
 RTC_DATA_ATTR int bootCount = 0;  //counts number of boots
+int loop_count = 0; //counts number of main loops
 
 
 void setup() {
@@ -36,7 +37,7 @@ void setup() {
 
 void loop() {
   ArduinoOTA.handle();  // Handles OTA operations
-  delay(2000);
+  delay(1000);
 
   // Get sensor values
   TempAndHumidity TandH;
@@ -57,8 +58,14 @@ void loop() {
 
   tb.loop();  // Process messages
 
-  // delay(10000);
-  // RPC_subscribed = false;
-  check_OTA(OTA_State); //if OTA don't sleep
+  if (loop_count > 5)
+  {
+    loop_count = 0;
+    RPC_subscribed = false;
+    check_OTA(OTA_State); //if OTA don't sleep
+  }
+  
+  loop_count++;
+  ArduinoOTA.handle(); 
   
 }
