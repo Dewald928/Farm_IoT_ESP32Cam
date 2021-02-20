@@ -36,6 +36,8 @@ void setup() {
 void loop() {
   ArduinoOTA.handle();  // Handles OTA operations
   delay(1000);
+  Serial.print("Loop count:");
+  Serial.println(loop_count);
 
   // Get sensor values
   TempAndHumidity TandH;
@@ -43,6 +45,8 @@ void loop() {
   float battery_voltage;
   for (int i = 0; i < 2; i++)
   {
+    Serial.print("Measuring count:");
+    Serial.println(i);
     TandH = get_temp_and_hum();
     soil_moisture = get_Soil(reg_b);
     battery_voltage = get_battery_voltage(reg_b);
@@ -58,7 +62,7 @@ void loop() {
 
   tb.loop();  // Process messages
 
-  if (loop_count > 2)
+  if (loop_count >= 2)
   {
     loop_count = 0;
     RPC_subscribed = false; //resubscribe after sleeping. Move moaybe?

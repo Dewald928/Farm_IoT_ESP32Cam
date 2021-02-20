@@ -5,7 +5,7 @@
 bool RPC_subscribed = false;
 uint8_t leds_control[] = { PIN_FLASH, PIN_LED}; // Array with LEDs that should be controlled from ThingsBoard, one by one
 // Initial period of LED cycling.
-int OTA_State = 1;
+int OTA_State = 0;
 
 void check_TB(){
     if (!tb.connected()) {
