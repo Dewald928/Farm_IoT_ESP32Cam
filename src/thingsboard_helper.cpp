@@ -105,8 +105,8 @@ RPC_Callback callbacks[] = {
   { "setOTA",         processSetOTA },
   { "getOTA",         processGetOTA },
   { "setGpioStatus",  processSetGpioState },
-  { "setFlash",       processSetFlash},
-  { "getFlash",       processGetFlash},
+  // { "setFlash",       processSetFlash},
+  // { "getFlash",       processGetFlash},
 };
 
 

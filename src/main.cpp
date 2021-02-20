@@ -9,8 +9,6 @@
 #include "driver/rtc_io.h" 
 #include "OTA_handler.h"
 
-// todo/fix OTA updates with sleep
-
 // Init instances
 DHT dht(PIN_DHT, DHTTYPE);
 WiFiClient espClient; // Initialize ThingsBoard client
@@ -29,7 +27,7 @@ void setup() {
   start_OTA();
 
   ++bootCount;
-  Serial.println("Boot number: " + String(bootCount));
+  Serial.println("boot number: " + String(bootCount));
   print_wakeup_reason();
   esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
   delay(500);
@@ -42,10 +40,12 @@ void loop() {
   // Get sensor values
   TempAndHumidity TandH;
   float soil_moisture;
+  float battery_voltage;
   for (int i = 0; i < 2; i++)
   {
     TandH = get_temp_and_hum();
     soil_moisture = get_Soil(reg_b);
+    battery_voltage = get_battery_voltage(reg_b);
     delay(1000);
   }  
 
@@ -54,14 +54,14 @@ void loop() {
   check_RPC_subscribe(); // Reconnect to RPC
 
   // Log values
-  log_to_tb(TandH.temperature, TandH.humidity, soil_moisture);  // log temp, hum, soil to thingsboard
+  log_to_tb(TandH.temperature, TandH.humidity, soil_moisture, battery_voltage);  // log temp, hum, soil to thingsboard
 
   tb.loop();  // Process messages
 
-  if (loop_count > 5)
+  if (loop_count > 2)
   {
     loop_count = 0;
-    RPC_subscribed = false;
+    RPC_subscribed = false; //resubscribe after sleeping. Move moaybe?
     check_OTA(OTA_State); //if OTA don't sleep
   }
   

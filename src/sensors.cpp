@@ -8,7 +8,7 @@ uint64_t reg_b;
 void ready_GPIO(){
     reg_b = READ_PERI_REG(SENS_SAR_READ_CTRL2_REG);
     pinMode(PIN_LED, OUTPUT);
-    pinMode(PIN_FLASH, OUTPUT);
+    // pinMode(PIN_FLASH, OUTPUT);
 }
 
 
@@ -103,8 +103,28 @@ TempAndHumidity get_temp_and_hum(){
 }
 
 
-void log_to_tb(float temperature, float humidity, float soil_moisture){
+float get_battery_voltage(uint64_t reg_b){
+    // ADC Pin Reset: Do this before every analogRead()
+    WRITE_PERI_REG(SENS_SAR_READ_CTRL2_REG, reg_b);
+    //VERY IMPORTANT: DO THIS TO NOT HAVE INVERTED VALUES! port 14 inverts but not 12. weird.
+    SET_PERI_REG_MASK(SENS_SAR_READ_CTRL2_REG, SENS_SAR2_DATA_INV);
+
+    int value = analogRead(PIN_BATTERY);
+    // float battery_voltage = map(value, 4095, 0, 3.3f, 0.0f);
+    float battery_voltage = (value * 3.3)/4095;
+
+    Serial.print(F("Battery voltage: "));
+    Serial.print(value);
+    Serial.print(' ');
+    Serial.print(battery_voltage);
+    Serial.println('V');
+    return battery_voltage;
+}
+
+
+void log_to_tb(float temperature, float humidity, float soil_moisture, float battery_voltage){
     tb.sendTelemetryFloat("temperature", temperature);
     tb.sendTelemetryFloat("humidity", humidity);
     tb.sendTelemetryFloat("soil_moisture", soil_moisture);
+    tb.sendTelemetryFloat("battery_voltage", battery_voltage);
 }

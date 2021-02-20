@@ -23,7 +23,8 @@ void ready_GPIO(); // Setup analog pins before wifi on
 void LED_on(); // turns status led on
 void LED_off(); // turn status led off
 float get_Soil(uint64_t);  // Gets soil moisture in percentage
+float get_battery_voltage(uint64_t);
 float get_temperature();        // Get temp
 float get_humidity();        // Get hum
 TempAndHumidity get_temp_and_hum(); // gets temperature and humidity
-void log_to_tb(float, float, float);    // log temp, hum, soil to thingsboard
+void log_to_tb(float, float, float, float);    // log temp, hum, soil to thingsboard
