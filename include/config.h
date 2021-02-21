@@ -1,3 +1,6 @@
+//Software
+#define FIRMWARE_VERSION "0.0.1"
+
 // Constants
 #define PIN_DHT 15 // Digital pin connected to the DHT sensor
 #define PIN_SOIL 14 // Analog pin for soil sensor
