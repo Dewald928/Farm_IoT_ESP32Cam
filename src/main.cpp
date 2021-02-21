@@ -23,6 +23,7 @@ void setup() {
   dht.begin();
   WiFi.begin(WIFI_AP_NAME, WIFI_PASSWORD);
   InitWiFi();
+  check_TB();   // Reconnect to ThingsBoard, if needed
   LED_on();
   start_OTA();
 
@@ -31,11 +32,13 @@ void setup() {
   print_wakeup_reason();
   esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
   delay(500);
+
+  log_attributes_tb(WiFi.localIP().toString(), "0.0.1");
 }
 
 void loop() {
   ArduinoOTA.handle();  // Handles OTA operations
-  delay(1000);
+  // delay(1000);
   Serial.print("Loop count:");
   Serial.println(loop_count);
 
@@ -62,7 +65,7 @@ void loop() {
 
   tb.loop();  // Process messages
 
-  if (loop_count >= 2)
+  if (loop_count > 2)
   {
     loop_count = 0;
     RPC_subscribed = false; //resubscribe after sleeping. Move moaybe?

@@ -122,9 +122,3 @@ float get_battery_voltage(uint64_t reg_b){
 }
 
 
-void log_to_tb(float temperature, float humidity, float soil_moisture, float battery_voltage){
-    tb.sendTelemetryFloat("temperature", temperature);
-    tb.sendTelemetryFloat("humidity", humidity);
-    tb.sendTelemetryFloat("soil_moisture", soil_moisture);
-    tb.sendTelemetryFloat("battery_voltage", battery_voltage);
-}

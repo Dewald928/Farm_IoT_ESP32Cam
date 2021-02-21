@@ -5,7 +5,7 @@
 bool RPC_subscribed = false;
 uint8_t leds_control[] = { PIN_FLASH, PIN_LED}; // Array with LEDs that should be controlled from ThingsBoard, one by one
 // Initial period of LED cycling.
-int OTA_State = 0;
+int OTA_State = 1;
 
 void check_TB(){
     if (!tb.connected()) {
@@ -126,3 +126,20 @@ void check_RPC_subscribe(){
     RPC_subscribed = true;
   }
 }
+
+
+void log_to_tb(float temperature, float humidity, float soil_moisture, float battery_voltage){
+    tb.sendTelemetryFloat("temperature", temperature);
+    tb.sendTelemetryFloat("humidity", humidity);
+    tb.sendTelemetryFloat("soil_moisture", soil_moisture);
+    tb.sendTelemetryFloat("battery_voltage", battery_voltage);
+}
+
+
+void log_attributes_tb(String ip_address, String firmware_version){
+    Serial.println("Logging attributes");
+    Serial.println(ip_address);
+    tb.sendAttributeString("IP", ip_address.c_str());
+    tb.sendAttributeString("Firmware", firmware_version.c_str());
+}
+
