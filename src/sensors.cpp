@@ -6,6 +6,7 @@
 uint64_t reg_b;
 
 void ready_GPIO(){
+    WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); 
     reg_b = READ_PERI_REG(SENS_SAR_READ_CTRL2_REG);
     pinMode(PIN_LED, OUTPUT);
     // pinMode(PIN_FLASH, OUTPUT);

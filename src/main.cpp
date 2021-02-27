@@ -8,6 +8,7 @@
 #include "driver/gpio.h"
 #include "driver/rtc_io.h" 
 #include "OTA_handler.h"
+#include "telegramcamera.h"
 
 // Init instances
 DHT dht(PIN_DHT, DHTTYPE);
@@ -26,6 +27,7 @@ void setup() {
   check_TB();   // Reconnect to ThingsBoard, if needed
   LED_on();
   start_OTA();
+  configInitCamera();
 
   ++bootCount;
   Serial.println("boot number: " + String(bootCount));
@@ -64,6 +66,8 @@ void loop() {
   log_to_tb(TandH.temperature, TandH.humidity, soil_moisture, battery_voltage);  // log temp, hum, soil to thingsboard
 
   tb.loop();  // Process messages
+
+  checkTelegram();
 
   if (loop_count >= 2)
   {

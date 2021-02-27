@@ -21,3 +21,9 @@
 // Thingsboard
 #define TB_TOKEN    "VzQXLXW5zznguTWQYa7N"
 #define TB_SERVER   "demo.thingsboard.io" // ThingsBoard server instance.
+
+// Telegram
+#define BOT_TOKEN "1693008485:AAGTZs6P6PmW0i2_HEtSWftkzYCr3iPvOPQ"   // Initialize Telegram BOT
+#define TELEGRAM_CHAT_ID  "1349347798" // Use @myidbot to find out the chat ID of an individual or a group
+// Also note that you need to click "start" on a bot before it can
+// message you

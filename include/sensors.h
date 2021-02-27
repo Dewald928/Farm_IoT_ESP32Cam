@@ -4,6 +4,8 @@
 #include "driver/adc.h" //for analog pin control
 #include "esp32-hal-adc.h" // needed for adc pin reset
 #include "soc/sens_reg.h" // needed for adc pin reset
+#include "soc/soc.h"
+#include "soc/rtc_cntl_reg.h"
 #include <DHT.h>
 #include <Wire.h> // needed?
 #include <SPI.h>  // needed?
