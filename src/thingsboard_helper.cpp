@@ -5,7 +5,7 @@
 bool RPC_subscribed = false;
 uint8_t leds_control[] = { PIN_FLASH, PIN_LED}; // Array with LEDs that should be controlled from ThingsBoard, one by one
 // Initial period of LED cycling.
-int OTA_State = 1;
+int SLEEP = 0;  // 0, doesn't sleep
 
 void check_TB(){
     if (!tb.connected()) {
@@ -27,29 +27,29 @@ void check_TB(){
 // Processes function for RPC call "setValue"
 // RPC_Data is a JSON variant, that can be queried using operator[]
 // See https://arduinojson.org/v5/api/jsonvariant/subscript/ for more details
-RPC_Response processSetOTA(const RPC_Data &data)
+RPC_Response processSetSLEEP(const RPC_Data &data)
 {
-  Serial.println("Received the set OTA method");
+  Serial.println("Received the set SLEEP method");
 
   // Process data
 
-  OTA_State = data;
+  SLEEP = data;
 
   Serial.print("Set new delay: ");
-  Serial.println(OTA_State);
+  Serial.println(SLEEP);
 
-  return RPC_Response(NULL, OTA_State);
+  return RPC_Response(NULL, SLEEP);
 }
 
 
 // Processes function for RPC call "getValue"
 // RPC_Data is a JSON variant, that can be queried using operator[]
 // See https://arduinojson.org/v5/api/jsonvariant/subscript/ for more details
-RPC_Response processGetOTA(const RPC_Data &data)
+RPC_Response processGetSLEEP(const RPC_Data &data)
 {
-  Serial.println("Received the get OTA method");
+  Serial.println("Received the get SLEEP method");
 
-  return RPC_Response(NULL, OTA_State);
+  return RPC_Response(NULL, SLEEP);
 }
 
 
@@ -102,8 +102,8 @@ RPC_Response processSetGpioState(const RPC_Data &data)
 
 // RPC handlers
 RPC_Callback callbacks[] = {
-  { "setOTA",         processSetOTA },
-  { "getOTA",         processGetOTA },
+  { "setSLEEP",         processSetSLEEP },
+  { "getSLEEP",         processGetSLEEP },
   { "setGpioStatus",  processSetGpioState },
   // { "setFlash",       processSetFlash},
   // { "getFlash",       processGetFlash},

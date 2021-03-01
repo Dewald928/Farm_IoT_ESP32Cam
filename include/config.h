@@ -4,7 +4,7 @@
 // Constants
 #define PIN_DHT 15 // Digital pin connected to the DHT sensor
 #define PIN_SOIL 14 // Analog pin for soil sensor
-#define PIN_BATTERY 12 // Analog pin for battery level
+#define PIN_BATTERY 13 // Analog pin for battery level
 #define PIN_LED 33 // Pin for onboard led
 #define PIN_FLASH 4 // Pin for builtin flash
 #define DHTTYPE DHT22 //DHT22 sensor

@@ -73,7 +73,7 @@ void loop() {
   {
     loop_count = 0;
     RPC_subscribed = false; //resubscribe after sleeping. Move moaybe?
-    check_OTA(OTA_State); //if OTA don't sleep
+    check_OTA(SLEEP); //if OTA don't sleep
   }
   
   loop_count++;

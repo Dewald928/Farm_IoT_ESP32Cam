@@ -44,9 +44,9 @@ void start_OTA(){
 }
 
 
-void check_OTA(int OTA_State){
+void check_OTA(int SLEEP){
   // If OTA is enabled wait for update instead of sleep
-  if (OTA_State == 1)
+  if (SLEEP == 0)
   {
     ArduinoOTA.handle(); 
   }
