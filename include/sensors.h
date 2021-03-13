@@ -29,4 +29,5 @@ float get_battery_voltage(uint64_t);
 float get_temperature();        // Get temp
 float get_humidity();        // Get hum
 TempAndHumidity get_temp_and_hum(); // gets temperature and humidity
+float mapf(float , float , float , float , float );
 
