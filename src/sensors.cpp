@@ -108,7 +108,7 @@ float get_battery_voltage(uint64_t reg_b){
     SET_PERI_REG_MASK(SENS_SAR_READ_CTRL2_REG, SENS_SAR2_DATA_INV);
 
     int value = analogRead(PIN_BATTERY);
-    float battery_voltage = mapf(value, 4095, 2700, 4.2, 0);
+    float battery_voltage = mapf(value, 4435, 0, 4.2, 0);
     // float battery_voltage = (value * 4.2)/4095;
 
     Serial.print(F("Battery voltage: "));
