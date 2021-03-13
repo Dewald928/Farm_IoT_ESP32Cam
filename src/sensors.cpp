@@ -48,7 +48,6 @@ float get_temperature() {
     // Check if any reads failed and exit early (to try again).
     if (isnan(t)) {
         Serial.println(F("Failed to read from DHT sensor!"));
-        get_temperature();
         delay(1000);
     }
     Serial.print(F("Temperature: "));
@@ -67,7 +66,6 @@ float get_humidity() {
     // Check if any reads failed and exit early (to try again).
     if (isnan(h)) {
         Serial.println(F("Failed to read from DHT sensor!"));
-        get_humidity();
         delay(1000);
     }
     Serial.print(F("Humidity: "));
@@ -88,7 +86,6 @@ TempAndHumidity get_temp_and_hum(){
 
     if (isnan(h) || isnan(t)) {
     Serial.println(F("Failed to read from DHT sensor!"));
-    get_temp_and_hum();
     }
 
     Serial.print(F("Temperature: "));
@@ -111,14 +108,15 @@ float get_battery_voltage(uint64_t reg_b){
     SET_PERI_REG_MASK(SENS_SAR_READ_CTRL2_REG, SENS_SAR2_DATA_INV);
 
     int value = analogRead(PIN_BATTERY);
-    // float battery_voltage = map(value, 4095, 0, 3.3f, 0.0f);
-    float battery_voltage = (value * 4.2)/4095;
+    float battery_voltage = map(value, 4095, 0, 4.2, 0);
+    // float battery_voltage = (value * 4.2)/4095;
 
     Serial.print(F("Battery voltage: "));
     Serial.print(value);
     Serial.print(' ');
     Serial.print(battery_voltage);
     Serial.println('V');
+
     return battery_voltage;
 }
 
