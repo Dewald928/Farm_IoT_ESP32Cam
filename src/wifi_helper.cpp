@@ -19,12 +19,15 @@ void InitWiFi() {
 
 void reconnect() {
   // Loop until we're reconnected
+  int timeout_tries = 10;
   wifi_status = WiFi.status();
   if ( wifi_status != WL_CONNECTED) {
     WiFi.begin(WIFI_AP_NAME, WIFI_PASSWORD);
-    while (WiFi.status() != WL_CONNECTED) {
+    int i = 0;
+    while ((WiFi.status() != WL_CONNECTED) && (i < timeout_tries)) {
       delay(500);
       Serial.print(".");
+      i++;
     }
     Serial.println("Connected to AP");
     Serial.print("IP address: ");
@@ -37,6 +40,5 @@ void check_WiFi(){
   // Reconnect to WiFi, if needed
   if (WiFi.status() != WL_CONNECTED) {
     reconnect();
-    check_WiFi();
   }
 }

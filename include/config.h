@@ -19,8 +19,8 @@
 #define WIFI_PASSWORD       "0004edb3faee"  // WiFi password
 
 // Thingsboard
-#define TB_TOKEN    "VzQXLXW5zznguTWQYa7N"
-#define TB_SERVER   "demo.thingsboard.io" // ThingsBoard server instance.
+#define TB_TOKEN    "eA93qNTjloEx1zpfom3G"
+#define TB_SERVER   "enginosoft.com" // ThingsBoard server instance.
 
 // Telegram
 #define BOT_TOKEN "1693008485:AAGTZs6P6PmW0i2_HEtSWftkzYCr3iPvOPQ"   // Initialize Telegram BOT
