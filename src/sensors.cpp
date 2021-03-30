@@ -106,6 +106,7 @@ float get_battery_voltage(uint64_t reg_b){
     WRITE_PERI_REG(SENS_SAR_READ_CTRL2_REG, reg_b);
     //VERY IMPORTANT: DO THIS TO NOT HAVE INVERTED VALUES! port 14 inverts but not 12. weird.
     SET_PERI_REG_MASK(SENS_SAR_READ_CTRL2_REG, SENS_SAR2_DATA_INV);
+    analogSetAttenuation(ADC_11db);
 
     int value = analogRead(PIN_BATTERY);
     float battery_voltage = mapf(value, 4095, 0, 4.2, 0);
