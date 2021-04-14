@@ -8,7 +8,8 @@
 #include "driver/gpio.h"
 #include "driver/rtc_io.h" 
 #include "OTA_handler.h"
-#include "telegramcamera.h"
+// #include "telegramcamera.h"
+#include "camera_post.h"
 
 // Init instances
 DHT dht(PIN_DHT, DHTTYPE);
@@ -27,7 +28,8 @@ void setup() {
   check_TB();   // Reconnect to ThingsBoard, if needed
   LED_on();
   start_OTA();
-  configInitCamera();
+  // configInitCamera();
+  InitCamera();
 
   ++bootCount;
   Serial.println("boot number: " + String(bootCount));
@@ -40,6 +42,7 @@ void setup() {
 
 void loop() {
   ArduinoOTA.handle();  // Handles OTA operations
+  // checkTelegram();
   // delay(1000);
   Serial.print("Loop count:");
   Serial.println(loop_count);
@@ -67,10 +70,9 @@ void loop() {
 
   tb.loop();  // Process messages
 
-  checkTelegram();
-
   if (loop_count >= 2)
   {
+    sendPhoto(); 
     loop_count = 0;
     RPC_subscribed = false; //resubscribe after sleeping. Move moaybe?
     check_OTA(SLEEP); //if OTA don't sleep
