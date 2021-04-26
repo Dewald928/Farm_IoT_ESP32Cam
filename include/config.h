@@ -22,6 +22,10 @@
 #define TB_TOKEN    "eA93qNTjloEx1zpfom3G"
 #define TB_SERVER   "enginosoft.com" // ThingsBoard server instance.
 
+// Image server
+#define SERVER_ADDRESS "10.0.0.60"
+#define SERVER_PORT 12000
+
 // Telegram
 #define BOT_TOKEN "1693008485:AAGTZs6P6PmW0i2_HEtSWftkzYCr3iPvOPQ"   // Initialize Telegram BOT
 #define TELEGRAM_CHAT_ID  "1349347798" // Use @myidbot to find out the chat ID of an individual or a group

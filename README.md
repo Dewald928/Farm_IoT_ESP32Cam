@@ -21,6 +21,7 @@ chown username ttyUSB0
 * [x] OTA updates
 * [x] Log to tensorboard
 * [x] Device attributes log to tb
+* [ ] Get tunnel number from thingsboard
 * [ ] More device attributes?
 * [ ] Take picture
 * [ ] Log picture to a server
