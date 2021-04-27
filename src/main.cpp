@@ -26,6 +26,7 @@ void setup() {
   WiFi.begin(WIFI_AP_NAME, WIFI_PASSWORD);
   InitWiFi();
   check_TB();   // Reconnect to ThingsBoard, if needed
+  get_tunnelNum();
   LED_on();
   start_OTA();
   // configInitCamera();

@@ -76,16 +76,6 @@ RPC_Response processGetFlash(const RPC_Data &data)
   return RPC_Response(NULL, flash_status);
 }
 
-// Gets tunnel number
-RPC_Response processGetTunnelNum(const RPC_Data &data)
-{
-  Serial.println("Getting tunnel number: ");
-  tunnelNum = data;
-  Serial.print(tunnelNum);
-
-  return RPC_Response(NULL, tunnelNum);
-}
-
 // Processes function for RPC call "setGpioStatus"
 // RPC_Data is a JSON variant, that can be queried using operator[]
 // See https://arduinojson.org/v5/api/jsonvariant/subscript/ for more details
@@ -114,7 +104,6 @@ RPC_Callback callbacks[] = {
     {"setSLEEP", processSetSLEEP},
     {"getSLEEP", processGetSLEEP},
     {"setGpioStatus", processSetGpioState},
-    {"getTunnelNum", processGetTunnelNum},
     // { "setFlash",       processSetFlash},
     // { "getFlash",       processGetFlash},
 };
@@ -153,4 +142,37 @@ void log_attributes_tb(String ip_address, String firmware_version)
   Serial.println(ip_address);
   tb.sendAttributeString("IP", ip_address.c_str());
   tb.sendAttributeString("Firmware", firmware_version.c_str());
+}
+
+void get_tunnelNum()
+{
+  if ((WiFi.status() == WL_CONNECTED))
+  { //Check the current connection status
+
+    HTTPClient http;
+
+    http.begin("http://" + String(TB_SERVER) + ":8080/api/v1/" + String(TB_TOKEN) + "/attributes"); //Specify the URL
+    int httpCode = http.GET();                                                                      //Make the request
+
+    if (httpCode > 0)
+    { //Check for the returning code
+
+      String payload = http.getString();
+      Serial.println(payload);
+
+      DynamicJsonDocument doc(1024);
+      deserializeJson(doc, payload);
+      JsonObject obj = doc.as<JsonObject>();
+
+      int tunnel_num = obj["shared"]["tunnelNum"];
+      tunnelNum = tunnel_num;
+      // Serial.println(tunnel_num);
+    }
+    else
+    {
+      Serial.println("Error on HTTP request");
+    }
+
+    http.end(); //Free the resources
+  }
 }
