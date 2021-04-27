@@ -1,9 +1,10 @@
 #include "camera_post.h"
 
 WiFiClient client;
-String serverPath = "/tunnel";     // The default serverPath should be upload.php
-String serverName = SERVER_ADDRESS;   // REPLACE WITH YOUR Raspberry Pi IP ADDRESS
+String serverPath = "/tunnel";     
+String serverName = SERVER_ADDRESS;  
 const int serverPort = SERVER_PORT;
+// int tunnelNum;
 
 void InitCamera()
 {
@@ -72,6 +73,7 @@ String sendPhoto()
     if (client.connect(serverName.c_str(), serverPort))
     {
         Serial.println("Connection successful!");
+        String tunnelNumStr = "--RandomNerdTutorials\r\nContent-Disposition: form-data; name=\"tunnelNum\r\n\r\n" + String(tunnelNum);
         String head = "--RandomNerdTutorials\r\nContent-Disposition: form-data; name=\"tunnelImg\"; filename=\"esp32-cam.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n";
         String tail = "\r\n--RandomNerdTutorials--\r\n";
 
@@ -84,6 +86,7 @@ String sendPhoto()
         client.println("Content-Length: " + String(totalLen));
         client.println("Content-Type: multipart/form-data; boundary=RandomNerdTutorials");
         client.println();
+        client.println(tunnelNumStr);
         client.print(head);
 
         uint8_t *fbBuf = fb->buf;

@@ -29,6 +29,9 @@
 #define HREF_GPIO_NUM     23
 #define PCLK_GPIO_NUM     22
 
+// Static variable
+extern int tunnelNum;
+
 // functions
 void InitCamera();
 String sendPhoto();

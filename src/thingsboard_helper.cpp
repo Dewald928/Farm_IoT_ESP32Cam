@@ -6,6 +6,7 @@ bool RPC_subscribed = false;
 uint8_t leds_control[] = { PIN_FLASH, PIN_LED}; // Array with LEDs that should be controlled from ThingsBoard, one by one
 // Initial period of LED cycling.
 int SLEEP = 1;  // 0, doesn't sleep
+int tunnelNum = 0; // Default tunnel number
 
 void check_TB(){
     if (!tb.connected()) {
@@ -76,6 +77,20 @@ RPC_Response processGetFlash(const RPC_Data &data)
   return RPC_Response(NULL, flash_status);
 }
 
+// Gets tunnel number
+RPC_Response processGetTunnelNum(const RPC_Data &data)
+{
+  Serial.println("Getting tunnel number: ");
+  if (data.size() != 0)
+  {
+    tunnelNum = data;
+  }  
+  
+  Serial.print(tunnelNum);
+
+  return RPC_Response(NULL, tunnelNum);
+}
+
 // Processes function for RPC call "setGpioStatus"
 // RPC_Data is a JSON variant, that can be queried using operator[]
 // See https://arduinojson.org/v5/api/jsonvariant/subscript/ for more details
@@ -105,6 +120,7 @@ RPC_Callback callbacks[] = {
   { "setSLEEP",         processSetSLEEP },
   { "getSLEEP",         processGetSLEEP },
   { "setGpioStatus",  processSetGpioState },
+  { "getTunnelNum",  processGetTunnelNum },
   // { "setFlash",       processSetFlash},
   // { "getFlash",       processGetFlash},
 };
