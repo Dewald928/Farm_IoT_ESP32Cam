@@ -74,7 +74,7 @@ String sendPhoto()
     {
         Serial.println("Connection successful!");
         String tunnelNumStr = "--RandomNerdTutorials\r\nContent-Disposition: form-data; name=\"tunnelNum\r\n\r\n" + String(tunnelNum);
-        String head = "--RandomNerdTutorials\r\nContent-Disposition: form-data; name=\"tunnelImg\"; filename=\"esp32-cam.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n";
+        String head = "--RandomNerdTutorials\r\nContent-Disposition: form-data; name=\"tunnelImg\"; filename=\"T" + String(tunnelNum) + ".jpg\"\r\nContent-Type: image/jpeg\r\n\r\n";
         String tail = "\r\n--RandomNerdTutorials--\r\n";
 
         uint32_t imageLen = fb->len;
