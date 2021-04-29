@@ -23,8 +23,8 @@
 #define TB_SERVER   "enginosoft.com" // ThingsBoard server instance.
 
 // Image server
-#define SERVER_ADDRESS "10.0.0.60"
-#define SERVER_PORT 12000
+#define SERVER_ADDRESS "enginosoft.com"
+#define SERVER_PORT 12345
 
 // Telegram
 #define BOT_TOKEN "1693008485:AAGTZs6P6PmW0i2_HEtSWftkzYCr3iPvOPQ"   // Initialize Telegram BOT
