@@ -26,6 +26,7 @@ void setup() {
   WiFi.begin(WIFI_AP_NAME, WIFI_PASSWORD);
   InitWiFi();
   check_TB();   // Reconnect to ThingsBoard, if needed
+  log_attributes_tb(WiFi.localIP().toString(), FIRMWARE_VERSION);
   get_tunnelNum();
   LED_on();
   start_OTA();
@@ -38,7 +39,6 @@ void setup() {
   esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
   delay(500);
 
-  log_attributes_tb(WiFi.localIP().toString(), FIRMWARE_VERSION);
 }
 
 void loop() {
