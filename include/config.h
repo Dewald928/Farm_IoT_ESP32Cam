@@ -1,5 +1,5 @@
 //Software
-#define FIRMWARE_VERSION "0.0.2"
+#define FIRMWARE_VERSION "0.0.3"
 
 // Constants
 #define PIN_DHT 15 // Digital pin connected to the DHT sensor
@@ -19,7 +19,7 @@
 #define WIFI_PASSWORD       "0004edb3faee"  // WiFi password
 
 // Thingsboard
-#define TB_TOKEN    "eA93qNTjloEx1zpfom3G"
+#define TB_TOKEN    "ZXkepFTduyZlE2oR9OnO"
 #define TB_SERVER   "enginosoft.com" // ThingsBoard server instance.
 
 // Image server
