@@ -11,6 +11,7 @@
 #include <SPI.h>  // needed?
 #include "config.h"
 #include "ThingsBoard.h"
+#include "driver/rtc_io.h"
 
 extern uint64_t reg_b; // Used to store Pin registers
 extern DHT dht;
@@ -30,4 +31,5 @@ float get_temperature();        // Get temp
 float get_humidity();        // Get hum
 TempAndHumidity get_temp_and_hum(); // gets temperature and humidity
 float mapf(float , float , float , float , float );
+float readVoltage(int);
 
