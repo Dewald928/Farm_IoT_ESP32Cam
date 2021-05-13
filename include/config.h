@@ -1,5 +1,5 @@
 //Software
-#define FIRMWARE_VERSION "0.0.6"
+#define FIRMWARE_VERSION "0.0.7"
 
 // Constants
 #define PIN_DHT 15 // Digital pin connected to the DHT sensor
@@ -12,7 +12,7 @@
 
 // Sleep
 #define uS_TO_S_FACTOR 1000000  /* Conversion factor for micro seconds to seconds */
-#define TIME_TO_SLEEP  120        /* Time ESP32 will go to sleep (in seconds) */
+#define TIME_TO_SLEEP  300        /* Time ESP32 will go to sleep (in seconds) */
 
 // WiFi
 #define WIFI_AP_NAME        "wlan-ap" //Wifi ssid
