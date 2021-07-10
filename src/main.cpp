@@ -11,7 +11,8 @@
 // #include "telegramcamera.h"
 #include "camera_post.h"
 #include "esp_bt.h"
-
+#include <NTPClient.h>
+#include <WiFiUdp.h>
 
 // Init instances
 DHT dht(PIN_DHT, DHTTYPE);
@@ -19,6 +20,8 @@ WiFiClient espClient;            // Initialize ThingsBoard client
 ThingsBoard tb(espClient);       // Initialize ThingsBoard instance
 RTC_DATA_ATTR int bootCount = 0; //counts number of boots
 int loop_count = 0;              //counts number of main loops
+WiFiUDP ntpUDP;                  // get date-time from wifi
+NTPClient timeClient(ntpUDP);     
 
 void setup()
 {
@@ -34,6 +37,7 @@ void setup()
   start_OTA();
   // configInitCamera();
   InitCamera();
+  timeClient.begin();
 
   ++bootCount;
   Serial.println("boot number: " + String(bootCount));
@@ -44,6 +48,7 @@ void setup()
 
 void loop()
 {
+  timeClient.update();  // gets current date-time
   ArduinoOTA.handle(); // Handles OTA operations
   // checkTelegram();
   // delay(1000);
@@ -80,7 +85,12 @@ void loop()
 
   if (loop_count >= 2)
   {
-    sendPhoto();
+    // if night time. don't take picture
+    int currentHour = timeClient.getHours();
+    if (currentHour < 19 && currentHour > 6)
+    {
+      sendPhoto();
+    }   
     loop_count = 0;
     RPC_subscribed = false; //resubscribe after sleeping. Move moaybe?
     check_OTA(SLEEP);       //if OTA don't sleep

@@ -1,5 +1,5 @@
 //Software
-#define FIRMWARE_VERSION "0.0.7"
+#define FIRMWARE_VERSION "0.0.8"
 
 // Constants
 #define PIN_DHT 15 // Digital pin connected to the DHT sensor
