@@ -117,13 +117,15 @@ float get_battery_voltage(uint64_t reg_b)
 
     int value = analogRead(PIN_BATTERY);
     float reading = readVoltage(value);
-    // float battery_voltage = mapf(reading, 3.3, 0, 4.0, 0);
-    float battery_voltage = reading*1.19;
+    float battery_voltage = mapf(reading, 3.14, 0, 4.1, 0);
+    // float battery_voltage = reading*1.19;
     // float battery_voltage = reading;
     // float battery_voltage = (value * 4.2)/4095;
 
     Serial.print(F("Battery voltage: "));
     Serial.print(value);
+    Serial.print(' ');
+    Serial.print(reading);
     Serial.print(' ');
     Serial.print(battery_voltage);
     Serial.println('V');

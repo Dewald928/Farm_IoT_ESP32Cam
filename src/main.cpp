@@ -87,7 +87,7 @@ void loop()
   {
     // if night time. don't take picture
     int currentHour = timeClient.getHours();
-    if (currentHour < 19 && currentHour > 6)
+    if (currentHour < 17 && currentHour > 4) //UTC time
     {
       sendPhoto();
     }   
